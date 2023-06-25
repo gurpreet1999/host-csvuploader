@@ -1,5 +1,6 @@
 const express=require("express")
 const { uploadFile, parsingCSV, deleteFile, showTableData, sorting, searching } = require("../controllers/fileController.js")
+const upload = require("../middleware/multerMiddleware.js")
 
 
 const fileRoute=express.Router()

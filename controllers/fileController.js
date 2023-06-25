@@ -14,17 +14,29 @@ let lengthOfData;
 //function to upload the file in uploads folder
 //we are using multer middleware to store
 async function uploadFile(req, res) {
+
+
+
+
   upload(req, res, function (err) {
+   
+
     if (err instanceof multer.MulterError) {
+  
       console.log(err);
     } else if (err) {
       console.log(err);
+
     } else if (req.file) {
+      
+    
       uploadFileName.push(req.file.filename);
+      
     }
 
-    return res.redirect("back");
+  return res.redirect("back");
   });
+
 }
 
 // this is my home route function ..it will send all the file store in the local server to my homePage
@@ -51,6 +63,7 @@ async function parsingCSV(req, res) {
   fs.createReadStream(filePath)
     .pipe(csv())
     .on("data", (data) => {
+      console.log(data)
       csvParseData.push(data);
     })
     .on("end", () => {
@@ -111,13 +124,16 @@ function showTableData(req, res) {
 function sorting(req, res) {
   let value = req.params.val;
 var field=req.params.field
+
 console.log(field)
 
+console.log(DataInCurrentPagination)
   console.log(value);
   let data;
   if (value === "asc") {
     data = "desc";
     DataInCurrentPagination.sort(function compare(a, b) {
+    
       if (a[field] < b[field]) {
         return 1;
       }
@@ -130,6 +146,7 @@ console.log(field)
     console.log("hi");
     data = "asc";
     DataInCurrentPagination.sort(function compare(a, b) {
+      
       if (a[field] < b[field]) {
         return -1;
       }
@@ -164,7 +181,7 @@ csvParseData.forEach((data)=>{
 
 for(const key in data){
 
-if(data[key].startsWith(search)){
+if(data[key].toLowerCase().startsWith(search.toLowerCase())){
   searchArray.push(data);
 
 }
